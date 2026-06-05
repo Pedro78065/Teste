@@ -1,0 +1,3 @@
+pip install uvicorn
+pip insall fastapi
+pip install mysql-connector-python
