@@ -30,3 +30,27 @@ def createDB_pizza():
             conexao.close()
             
 
+#user
+def table_users():
+    try:
+        conexao = mysql.connector.connect(
+            host = host,
+            user = user,
+            password = password,
+            database = database
+        )
+        cursor = conexao.cursor()
+        comando = f"""create table if not exists users(
+
+        )engine = innoDB charset = u'tf8mb4;"""
+        cursor.execute(comando)
+        conexao.commit()
+    except mysql.connector.Error as e:
+        print(f"Erro:{e}")
+    finally:
+        if cursor:
+            cursor.close()
+        if conexao:
+            conexao.close()
+#pedidos
+#ItensPedido
