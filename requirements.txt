@@ -1,3 +1,5 @@
 pip install uvicorn
 pip insall fastapi
 pip install mysql-connector-python
+pip install typing
+pip install pydantic
