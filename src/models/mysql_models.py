@@ -2,7 +2,7 @@ import mysql.connector
 
 host = "localhost"
 user = "root"
-password = ""
+password = "123456"
 database = "db_pizza"
 
 def createDB_pizza():
@@ -133,9 +133,9 @@ def insert_user(user_name, user_email, user_password, user_ativo = False, user_a
         )
         cursor = conexao.cursor()
         comando = f"""insert into users
-        (id, nome, email, senha, ativo, admin)
+        (nome, email, senha, ativo, admin)
         values
-        (defualt, %s, %s, %s, %s, %s);"""
+        (%s, %s, %s, %s, %s);"""
         dados = (user_name, user_email, user_password, user_ativo, user_admin)
         cursor.execute(comando, dados)
         conexao.commit()
@@ -164,6 +164,30 @@ def select_user_fromEmail(user_email):
         dados = (user_email,)
         cursor.execute(comando, dados)
         read = cursor.fetchone()
+        return read
+    except mysql.connector.Error as e:
+        print(f"Error:{e}")
+    finally:
+        if conexao:
+            conexao.close()
+        if cursor:
+            conexao.close()
+
+
+def select_user_all():
+    conexao = None
+    cursor = None
+    try:
+        conexao = mysql.connector.connect(
+            host = host,
+            user = user,
+            password = password,
+            database = database
+        )
+        cursor = conexao.cursor(dictionary = True)
+        comando = f"""select users.email from users;"""
+        cursor.execute(comando)
+        read = cursor.fetchall()
         return read
     except mysql.connector.Error as e:
         print(f"Error:{e}")
